@@ -1,0 +1,1 @@
+# threat-modeling-stride-sistem-presensi-berbasis-qr-code-
