@@ -1,0 +1,28 @@
+{
+  "version": "2.6.2",
+  "release_version": "1.0",
+  "released_at": "2026-11-18",
+  "summary": {
+    "title": "threat-modeling-stride-sistem-presensi-berbasis-qr-code",
+    "owner": "ColdWater712",
+    "description": "Sistem presensi perkuliahan berbasis web yang memfasilitasi dosen membuka sesi presensi berdurasi 5 menit dengan membangkitkan QR code, mahasiswa memindai QR code menggunakan akun kampus, Backend Presensi memvalidasi sesi dan keanggotaan kelas sebelum menyimpan kehadiran ke Database Akademik, serta admin akademik memantau rekap kehadiran seluruh kelas.\nRuang Lingkup: Pembukaan/penutupan sesi, pemindaian QR, validasi kehadiran, dan pembacaan rekap. Pendaftaran mata kuliah (KRS) dan perubahan nilai berada di luar lingkup.\nAsumsi Teknis:\n1.\t(Asumsi) Komunikasi jaringan menggunakan HTTPS/TLS, namun payload pada sisi klien tetap dapat diinspeksi atau dimodifikasi oleh pengguna.\n2.\t(Asumsi) QR code yang ditampilkan dosen bersifat statis selama masa berlaku 5 menit.\n3.\t(Asumsi) Sistem belum memiliki validasi lokasi (GPS/Geofencing) atau pembatasan IP Wi-Fi kampus saat pemindaian QR.\n4.\t(Asumsi) Layanan Autentikasi Kampus menerbitkan token sesi/JWT setelah login.\n5.\t(Asumsi) Sistem belum memiliki audit log immutable terpisah untuk mencatat riwayat perubahan status sesi.\n",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "id": 0,
+        "title": "DFD Level 1 - Sistem Presensi QR",
+        "diagramType": "STRIDE",
+        "placeholder": "New STRIDE diagram description",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "version": "2.6.2",
+        "cells": []
+      }
+    ],
+    "diagramTop": 1,
+    "reviewer": "",
+    "threatTop": 0
+  }
+}
