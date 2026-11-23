@@ -91,8 +91,8 @@
                 "text": "Dosen Pengampu"
               },
               "body": {
-                "stroke": "red",
-                "strokeWidth": 2.5,
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
                 "strokeDasharray": null
               }
             },
@@ -189,31 +189,9 @@
               "isTrustBoundary": false,
               "outOfScope": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": true,
+              "hasOpenThreats": false,
               "providesAuthentication": false,
-              "threats": [
-                {
-                  "id": "25f24e26-e16d-5ead-bdf9-ed38f8296c54",
-                  "title": "Penyangkalan terhadap tindakan presensi atau perubahan data",
-                  "status": "Open",
-                  "severity": "Medium",
-                  "type": "Repudiation",
-                  "description": "Jika sistem tidak menyimpan waktu, identitas pengguna, sesi, dan hasil operasi, pengguna dapat menyangkal bahwa ia membuka sesi, mengirim presensi, atau mengubah data. Hal ini dapat menyebabkan investigasi sengketa menjadi sulit. Pada elemen ini, dosen dapat menyangkal telah membuka atau menutup sesi presensi.",
-                  "mitigation": "Menyimpan audit log yang terlindungi dan mencatat identitas pengguna, waktu, sesi, serta tindakan yang dilakukan seperti pemindaian QR dan perubahan data.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 5,
-                  "score": "4"
-                }
-              ],
-              "threatFrequency": {
-                "spoofing": 0,
-                "tampering": 0,
-                "repudiation": 1,
-                "informationDisclosure": 0,
-                "denialOfService": 0,
-                "elevationOfPrivilege": 0
-              }
+              "threats": []
             }
           },
           {
@@ -332,7 +310,7 @@
               "providesAuthentication": false,
               "threats": [
                 {
-                  "id": "1802ee9c-c0b5-59d8-8c39-23653ce1af38",
+                  "id": "033500c4-fc4e-59a0-8831-b34d91719aa7",
                   "title": "Penggunaan akun mahasiswa yang dicuri",
                   "status": "Open",
                   "severity": "High",
@@ -343,25 +321,12 @@
                   "new": false,
                   "number": 1,
                   "score": "6"
-                },
-                {
-                  "id": "b6c95977-de94-555e-b0ef-4dddf54586eb",
-                  "title": "Penyangkalan terhadap tindakan presensi atau perubahan data",
-                  "status": "Open",
-                  "severity": "Medium",
-                  "type": "Repudiation",
-                  "description": "Jika sistem tidak menyimpan waktu, identitas pengguna, sesi, dan hasil operasi, pengguna dapat menyangkal bahwa ia membuka sesi, mengirim presensi, atau mengubah data. Hal ini dapat menyebabkan investigasi sengketa menjadi sulit. Pada elemen ini, mahasiswa dapat menyangkal telah mengirim presensi.",
-                  "mitigation": "Menyimpan audit log yang terlindungi dan mencatat identitas pengguna, waktu, sesi, serta tindakan yang dilakukan seperti pemindaian QR dan perubahan data.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 5,
-                  "score": "4"
                 }
               ],
               "threatFrequency": {
                 "spoofing": 1,
                 "tampering": 0,
-                "repudiation": 1,
+                "repudiation": 0,
                 "informationDisclosure": 0,
                 "denialOfService": 0,
                 "elevationOfPrivilege": 0
@@ -382,8 +347,8 @@
                 "text": "Admin Akademik"
               },
               "body": {
-                "stroke": "red",
-                "strokeWidth": 2.5,
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
                 "strokeDasharray": null
               }
             },
@@ -480,31 +445,9 @@
               "isTrustBoundary": false,
               "outOfScope": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": true,
+              "hasOpenThreats": false,
               "providesAuthentication": false,
-              "threats": [
-                {
-                  "id": "7154949b-052a-5b01-88d6-20505d2b92aa",
-                  "title": "Penyangkalan terhadap tindakan presensi atau perubahan data",
-                  "status": "Open",
-                  "severity": "Medium",
-                  "type": "Repudiation",
-                  "description": "Jika sistem tidak menyimpan waktu, identitas pengguna, sesi, dan hasil operasi, pengguna dapat menyangkal bahwa ia membuka sesi, mengirim presensi, atau mengubah data. Hal ini dapat menyebabkan investigasi sengketa menjadi sulit. Pada elemen ini, admin dapat menyangkal telah membaca rekap atau mengubah data presensi.",
-                  "mitigation": "Menyimpan audit log yang terlindungi dan mencatat identitas pengguna, waktu, sesi, serta tindakan yang dilakukan seperti pemindaian QR dan perubahan data.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 5,
-                  "score": "4"
-                }
-              ],
-              "threatFrequency": {
-                "spoofing": 0,
-                "tampering": 0,
-                "repudiation": 1,
-                "informationDisclosure": 0,
-                "denialOfService": 0,
-                "elevationOfPrivilege": 0
-              }
+              "threats": []
             }
           },
           {
@@ -626,51 +569,25 @@
               "privilegeLevel": "Akun layanan aplikasi (akses baca/tulis data presensi)",
               "threats": [
                 {
-                  "id": "31b26818-d63e-599d-9c2d-efbe51829af7",
+                  "id": "33db45b0-d84b-5b99-96a9-f51d1d9f4d44",
                   "title": "Pembukaan sesi oleh pengguna bukan dosen",
                   "status": "Open",
                   "severity": "High",
                   "type": "Elevation of privilege",
-                  "description": "Jika backend hanya memeriksa bahwa pengguna telah login tanpa memeriksa hubungan dosen dengan kelas, pengguna biasa dapat membuka sesi kelas lain. Hal ini dapat menyebabkan presensi dibuat atau dimanipulasi tanpa kewenangan. Ancaman ini terjadi pada permintaan buka/tutup sesi dari Dosen ke Backend Presensi.",
+                  "description": "Jika backend hanya memeriksa bahwa pengguna telah login tanpa memeriksa hubungan dosen dengan kelas, pengguna biasa dapat membuka sesi kelas lain. Hal ini dapat menyebabkan presensi dibuat atau dimanipulasi tanpa kewenangan.",
                   "mitigation": "Memeriksa hak akses dosen berdasarkan kelas yang diampu setiap kali membuka atau menutup sesi presensi.",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 2,
-                  "score": "6"
-                },
-                {
-                  "id": "744097a9-0fb0-55d0-8fac-878082d0fc6f",
-                  "title": "Penyangkalan terhadap tindakan presensi atau perubahan data",
-                  "status": "Open",
-                  "severity": "Medium",
-                  "type": "Repudiation",
-                  "description": "Jika sistem tidak menyimpan waktu, identitas pengguna, sesi, dan hasil operasi, pengguna dapat menyangkal bahwa ia membuka sesi, mengirim presensi, atau mengubah data. Hal ini dapat menyebabkan investigasi sengketa menjadi sulit.",
-                  "mitigation": "Menyimpan audit log yang terlindungi dan mencatat identitas pengguna, waktu, sesi, serta tindakan yang dilakukan seperti pemindaian QR dan perubahan data.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 5,
-                  "score": "4"
-                },
-                {
-                  "id": "ff1b2faa-3d64-57a4-b0d9-03b54f65d2c4",
-                  "title": "Banjir permintaan yang menghambat layanan",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Denial of service",
-                  "description": "Jika endpoint presensi atau rekap menerima permintaan tanpa pembatasan, penyerang dapat mengirim banyak permintaan sehingga validasi dan pencatatan menjadi lambat atau tidak tersedia.",
-                  "mitigation": "Menerapkan rate limiting berdasarkan akun atau perangkat, melakukan validasi input, membatasi jumlah permintaan, serta memantau lonjakan trafik pada layanan presensi dan rekap.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 8,
                   "score": "6"
                 }
               ],
               "threatFrequency": {
                 "spoofing": 0,
                 "tampering": 0,
-                "repudiation": 1,
+                "repudiation": 0,
                 "informationDisclosure": 0,
-                "denialOfService": 1,
+                "denialOfService": 0,
                 "elevationOfPrivilege": 1
               }
             }
@@ -689,8 +606,8 @@
                 "text": "Autentikasi\nKampus"
               },
               "body": {
-                "stroke": "red",
-                "strokeWidth": 2.5,
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
                 "strokeDasharray": null
               }
             },
@@ -787,34 +704,12 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": true,
+              "hasOpenThreats": false,
               "handlesCardPayment": false,
               "handlesGoodsOrServices": false,
               "isWebApplication": false,
               "privilegeLevel": "",
-              "threats": [
-                {
-                  "id": "8364be48-4a22-5316-9bdc-eb1887ed73a8",
-                  "title": "Penggunaan akun mahasiswa yang dicuri",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Spoofing",
-                  "description": "Jika penyerang memperoleh kredensial atau sesi login mahasiswa, penyerang dapat mengirim presensi sebagai mahasiswa tersebut. Hal ini dapat menyebabkan catatan kehadiran menjadi tidak sah dan integritas data akademik terganggu. Ancaman ini terkait proses autentikasi yang memvalidasi identitas dan sesi login mahasiswa.",
-                  "mitigation": "Menggunakan autentikasi yang kuat, menerapkan MFA jika tersedia, memvalidasi sesi pengguna di backend, membatasi masa berlaku sesi, dan memberikan notifikasi jika terdapat aktivitas login mencurigakan.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 1,
-                  "score": "6"
-                }
-              ],
-              "threatFrequency": {
-                "spoofing": 1,
-                "tampering": 0,
-                "repudiation": 0,
-                "informationDisclosure": 0,
-                "denialOfService": 0,
-                "elevationOfPrivilege": 0
-              }
+              "threats": []
             }
           },
           {
@@ -942,20 +837,7 @@
               "storesInventory": false,
               "threats": [
                 {
-                  "id": "6884a968-ee62-5243-b6c4-3248bff82950",
-                  "title": "Perubahan catatan kehadiran tanpa otorisasi",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Tampering",
-                  "description": "Jika operasi perubahan tidak memeriksa hak akses dengan tepat, akun atau komponen yang disalahgunakan dapat mengubah status hadir mahasiswa. Hal ini dapat menyebabkan data akademik menjadi tidak akurat.",
-                  "mitigation": "Membatasi hak akses untuk mengubah data presensi, memvalidasi identitas pengguna, menerapkan prinsip least privilege, dan mencatat setiap perubahan pada audit log.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 4,
-                  "score": "6"
-                },
-                {
-                  "id": "2224e890-e895-53e6-8255-cb8bcc1060d7",
+                  "id": "72bb5564-5d7b-5005-bb71-7a1711b63b08",
                   "title": "Penyangkalan terhadap tindakan presensi atau perubahan data",
                   "status": "Open",
                   "severity": "Medium",
@@ -966,26 +848,13 @@
                   "new": false,
                   "number": 5,
                   "score": "4"
-                },
-                {
-                  "id": "378baf8c-b775-580e-9310-b0283f09f5a1",
-                  "title": "Kebocoran rekap presensi kepada pihak yang tidak berwenang",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Information disclosure",
-                  "description": "Jika otorisasi rekap tidak diperiksa pada setiap permintaan, dosen dapat melihat kelas lain atau mahasiswa biasa memperoleh data presensi. Hal ini dapat menyebabkan informasi akademik dan pribadi tersebar.",
-                  "mitigation": "Membatasi akses rekap berdasarkan peran dan kelas yang diampu, memastikan sesi pengguna masih valid, serta hanya menampilkan data yang diperlukan.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 6,
-                  "score": "6"
                 }
               ],
               "threatFrequency": {
                 "spoofing": 0,
-                "tampering": 1,
+                "tampering": 0,
                 "repudiation": 1,
-                "informationDisclosure": 1,
+                "informationDisclosure": 0,
                 "denialOfService": 0,
                 "elevationOfPrivilege": 0
               }
@@ -995,7 +864,7 @@
             "shape": "flow",
             "attrs": {
               "line": {
-                "stroke": "red",
+                "stroke": "#333333",
                 "targetMarker": {
                   "name": "block"
                 },
@@ -1003,7 +872,7 @@
                   "name": ""
                 },
                 "strokeDasharray": null,
-                "strokeWidth": 2.5
+                "strokeWidth": 1.5
               }
             },
             "width": 200,
@@ -1017,50 +886,15 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": true,
+              "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": false,
               "isPublicNetwork": true,
               "protocol": "HTTP(S) – enkripsi belum ditentukan (A5)",
-              "threats": [
-                {
-                  "id": "28ce950b-f798-532f-aee8-f3f634a8cf87",
-                  "title": "Kebocoran rekap presensi kepada pihak yang tidak berwenang",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Information disclosure",
-                  "description": "Jika otorisasi rekap tidak diperiksa pada setiap permintaan, dosen dapat melihat kelas lain atau mahasiswa biasa memperoleh data presensi. Hal ini dapat menyebabkan informasi akademik dan pribadi tersebar.",
-                  "mitigation": "Membatasi akses rekap berdasarkan peran dan kelas yang diampu, memastikan sesi pengguna masih valid, serta hanya menampilkan data yang diperlukan.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 6,
-                  "score": "6"
-                },
-                {
-                  "id": "d846417d-9dcb-5b0e-9a62-c1f1eb6c47d8",
-                  "title": "Pengungkapan token melalui QR Code yang difoto",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Information disclosure",
-                  "description": "Jika QR Code difoto pihak lain, pihak tersebut dapat mengirim token sebelum kedaluwarsa dan mencoba mencatat presensi tanpa kehadiran mahasiswa yang sah. Hal ini dapat menyebabkan presensi dilakukan oleh pihak yang tidak hadir secara langsung. QR Code ini ditampilkan dosen di layar kelas lalu dipindai mahasiswa melalui browser.",
-                  "mitigation": "Menggunakan token QR dengan masa berlaku singkat dan sekali pakai, mengaitkan token dengan sesi presensi, serta memeriksa aktivitas presensi yang mencurigakan.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 7,
-                  "score": "9"
-                }
-              ],
+              "threats": [],
               "trustBoundaryIds": [
                 "7f9fe064-b1fc-4be0-9841-5d4ece8757d2"
-              ],
-              "threatFrequency": {
-                "spoofing": 0,
-                "tampering": 0,
-                "repudiation": 0,
-                "informationDisclosure": 2,
-                "denialOfService": 0,
-                "elevationOfPrivilege": 0
-              }
+              ]
             },
             "labels": [
               "Data QR code sesi (5 menit) & daftar hadir"
@@ -1089,7 +923,7 @@
             "shape": "flow",
             "attrs": {
               "line": {
-                "stroke": "red",
+                "stroke": "#333333",
                 "targetMarker": {
                   "name": "block"
                 },
@@ -1097,7 +931,7 @@
                   "name": ""
                 },
                 "strokeDasharray": null,
-                "strokeWidth": 2.5
+                "strokeWidth": 1.5
               }
             },
             "width": 200,
@@ -1111,37 +945,15 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": true,
+              "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": false,
               "isPublicNetwork": true,
               "protocol": "HTTP(S) – enkripsi belum ditentukan (A5)",
-              "threats": [
-                {
-                  "id": "abb8f356-6bef-5fdd-8033-7113499db5d5",
-                  "title": "Banjir permintaan yang menghambat layanan",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Denial of service",
-                  "description": "Jika endpoint presensi atau rekap menerima permintaan tanpa pembatasan, penyerang dapat mengirim banyak permintaan sehingga validasi dan pencatatan menjadi lambat atau tidak tersedia.",
-                  "mitigation": "Menerapkan rate limiting berdasarkan akun atau perangkat, melakukan validasi input, membatasi jumlah permintaan, serta memantau lonjakan trafik pada layanan presensi dan rekap.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 8,
-                  "score": "6"
-                }
-              ],
+              "threats": [],
               "trustBoundaryIds": [
                 "7f9fe064-b1fc-4be0-9841-5d4ece8757d2"
-              ],
-              "threatFrequency": {
-                "spoofing": 0,
-                "tampering": 0,
-                "repudiation": 0,
-                "informationDisclosure": 0,
-                "denialOfService": 1,
-                "elevationOfPrivilege": 0
-              }
+              ]
             },
             "labels": [
               "Permintaan buka/tutup sesi & token dosen"
@@ -1166,7 +978,7 @@
             "shape": "flow",
             "attrs": {
               "line": {
-                "stroke": "red",
+                "stroke": "#333333",
                 "targetMarker": {
                   "name": "block"
                 },
@@ -1174,7 +986,7 @@
                   "name": ""
                 },
                 "strokeDasharray": null,
-                "strokeWidth": 2.5
+                "strokeWidth": 1.5
               }
             },
             "width": 200,
@@ -1188,37 +1000,15 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": true,
+              "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": false,
               "isPublicNetwork": true,
               "protocol": "HTTP(S) – enkripsi belum ditentukan (A5)",
-              "threats": [
-                {
-                  "id": "08452d0f-5ec2-5cba-968e-ad447c774f5c",
-                  "title": "Banjir permintaan yang menghambat layanan",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Denial of service",
-                  "description": "Jika endpoint presensi atau rekap menerima permintaan tanpa pembatasan, penyerang dapat mengirim banyak permintaan sehingga validasi dan pencatatan menjadi lambat atau tidak tersedia.",
-                  "mitigation": "Menerapkan rate limiting berdasarkan akun atau perangkat, melakukan validasi input, membatasi jumlah permintaan, serta memantau lonjakan trafik pada layanan presensi dan rekap.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 8,
-                  "score": "6"
-                }
-              ],
+              "threats": [],
               "trustBoundaryIds": [
                 "7f9fe064-b1fc-4be0-9841-5d4ece8757d2"
-              ],
-              "threatFrequency": {
-                "spoofing": 0,
-                "tampering": 0,
-                "repudiation": 0,
-                "informationDisclosure": 0,
-                "denialOfService": 1,
-                "elevationOfPrivilege": 0
-              }
+              ]
             },
             "labels": [
               "Permintaan rekap kehadiran seluruh kelas"
@@ -1272,7 +1062,7 @@
               "protocol": "HTTP(S) – enkripsi belum ditentukan (A5)",
               "threats": [
                 {
-                  "id": "23d1f6e1-ee1e-5317-95a3-6ff8fe1c3d54",
+                  "id": "d5249c5f-5693-55af-aa73-4196c1417295",
                   "title": "Kebocoran rekap presensi kepada pihak yang tidak berwenang",
                   "status": "Open",
                   "severity": "High",
@@ -1320,7 +1110,7 @@
             "shape": "flow",
             "attrs": {
               "line": {
-                "stroke": "red",
+                "stroke": "#333333",
                 "targetMarker": {
                   "name": "block"
                 },
@@ -1328,7 +1118,7 @@
                   "name": ""
                 },
                 "strokeDasharray": null,
-                "strokeWidth": 2.5
+                "strokeWidth": 1.5
               }
             },
             "width": 200,
@@ -1342,35 +1132,13 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": true,
+              "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "API internal – enkripsi belum ditentukan (A5)",
-              "threats": [
-                {
-                  "id": "8a3eb0f6-bc50-5e53-8dec-e5be5e6c1500",
-                  "title": "Banjir permintaan yang menghambat layanan",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Denial of service",
-                  "description": "Jika endpoint presensi atau rekap menerima permintaan tanpa pembatasan, penyerang dapat mengirim banyak permintaan sehingga validasi dan pencatatan menjadi lambat atau tidak tersedia. Setiap permintaan yang membanjiri backend juga diteruskan sebagai permintaan verifikasi token ke Autentikasi Kampus.",
-                  "mitigation": "Menerapkan rate limiting berdasarkan akun atau perangkat, melakukan validasi input, membatasi jumlah permintaan, serta memantau lonjakan trafik pada layanan presensi dan rekap.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 8,
-                  "score": "6"
-                }
-              ],
-              "trustBoundaryIds": [],
-              "threatFrequency": {
-                "spoofing": 0,
-                "tampering": 0,
-                "repudiation": 0,
-                "informationDisclosure": 0,
-                "denialOfService": 1,
-                "elevationOfPrivilege": 0
-              }
+              "threats": [],
+              "trustBoundaryIds": []
             },
             "labels": [
               "Permintaan verifikasi token & peran pengguna"
@@ -1395,7 +1163,7 @@
             "shape": "flow",
             "attrs": {
               "line": {
-                "stroke": "red",
+                "stroke": "#333333",
                 "targetMarker": {
                   "name": "block"
                 },
@@ -1403,7 +1171,7 @@
                   "name": ""
                 },
                 "strokeDasharray": null,
-                "strokeWidth": 2.5
+                "strokeWidth": 1.5
               }
             },
             "width": 200,
@@ -1417,35 +1185,13 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": true,
+              "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "API internal – enkripsi belum ditentukan (A5)",
-              "threats": [
-                {
-                  "id": "d9d6a3b0-f3f2-551a-a3e4-5e2908809fc5",
-                  "title": "Banjir permintaan yang menghambat layanan",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Denial of service",
-                  "description": "Jika endpoint presensi atau rekap menerima permintaan tanpa pembatasan, penyerang dapat mengirim banyak permintaan sehingga validasi dan pencatatan menjadi lambat atau tidak tersedia. Pada aliran ini, respons validasi token dan peran menjadi lambat atau tidak tersedia sehingga presensi gagal diproses.",
-                  "mitigation": "Menerapkan rate limiting berdasarkan akun atau perangkat, melakukan validasi input, membatasi jumlah permintaan, serta memantau lonjakan trafik pada layanan presensi dan rekap.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 8,
-                  "score": "6"
-                }
-              ],
-              "trustBoundaryIds": [],
-              "threatFrequency": {
-                "spoofing": 0,
-                "tampering": 0,
-                "repudiation": 0,
-                "informationDisclosure": 0,
-                "denialOfService": 1,
-                "elevationOfPrivilege": 0
-              }
+              "threats": [],
+              "trustBoundaryIds": []
             },
             "labels": [
               "Status validasi sesi & atribut peran"
@@ -1470,7 +1216,7 @@
             "shape": "flow",
             "attrs": {
               "line": {
-                "stroke": "red",
+                "stroke": "#333333",
                 "targetMarker": {
                   "name": "block"
                 },
@@ -1478,7 +1224,7 @@
                   "name": ""
                 },
                 "strokeDasharray": null,
-                "strokeWidth": 2.5
+                "strokeWidth": 1.5
               }
             },
             "width": 200,
@@ -1492,37 +1238,15 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": true,
+              "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": false,
               "isPublicNetwork": true,
               "protocol": "HTTP(S) – enkripsi belum ditentukan (A5)",
-              "threats": [
-                {
-                  "id": "3145cf1d-f175-521b-9051-aaaad62538c1",
-                  "title": "Kebocoran rekap presensi kepada pihak yang tidak berwenang",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Information disclosure",
-                  "description": "Jika otorisasi rekap tidak diperiksa pada setiap permintaan, dosen dapat melihat kelas lain atau mahasiswa biasa memperoleh data presensi. Hal ini dapat menyebabkan informasi akademik dan pribadi tersebar.",
-                  "mitigation": "Membatasi akses rekap berdasarkan peran dan kelas yang diampu, memastikan sesi pengguna masih valid, serta hanya menampilkan data yang diperlukan.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 6,
-                  "score": "6"
-                }
-              ],
+              "threats": [],
               "trustBoundaryIds": [
                 "7f9fe064-b1fc-4be0-9841-5d4ece8757d2"
-              ],
-              "threatFrequency": {
-                "spoofing": 0,
-                "tampering": 0,
-                "repudiation": 0,
-                "informationDisclosure": 1,
-                "denialOfService": 0,
-                "elevationOfPrivilege": 0
-              }
+              ]
             },
             "labels": [
               "Status konfirmasi kehadiran"
@@ -1547,7 +1271,7 @@
             "shape": "flow",
             "attrs": {
               "line": {
-                "stroke": "red",
+                "stroke": "#333333",
                 "targetMarker": {
                   "name": "block"
                 },
@@ -1555,7 +1279,7 @@
                   "name": ""
                 },
                 "strokeDasharray": null,
-                "strokeWidth": 2.5
+                "strokeWidth": 1.5
               }
             },
             "width": 200,
@@ -1569,48 +1293,13 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": true,
+              "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "Koneksi database internal",
-              "threats": [
-                {
-                  "id": "184520e1-fa5c-5e76-84e2-21dfe614f0e8",
-                  "title": "Perubahan catatan kehadiran tanpa otorisasi",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Tampering",
-                  "description": "Jika operasi perubahan tidak memeriksa hak akses dengan tepat, akun atau komponen yang disalahgunakan dapat mengubah status hadir mahasiswa. Hal ini dapat menyebabkan data akademik menjadi tidak akurat.",
-                  "mitigation": "Membatasi hak akses untuk mengubah data presensi, memvalidasi identitas pengguna, menerapkan prinsip least privilege, dan mencatat setiap perubahan pada audit log.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 4,
-                  "score": "6"
-                },
-                {
-                  "id": "2afc9ec0-1c43-5d14-9b9e-d23fe71fda7e",
-                  "title": "Kebocoran rekap presensi kepada pihak yang tidak berwenang",
-                  "status": "Open",
-                  "severity": "High",
-                  "type": "Information disclosure",
-                  "description": "Jika otorisasi rekap tidak diperiksa pada setiap permintaan, dosen dapat melihat kelas lain atau mahasiswa biasa memperoleh data presensi. Hal ini dapat menyebabkan informasi akademik dan pribadi tersebar.",
-                  "mitigation": "Membatasi akses rekap berdasarkan peran dan kelas yang diampu, memastikan sesi pengguna masih valid, serta hanya menampilkan data yang diperlukan.",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 6,
-                  "score": "6"
-                }
-              ],
-              "trustBoundaryIds": [],
-              "threatFrequency": {
-                "spoofing": 0,
-                "tampering": 1,
-                "repudiation": 0,
-                "informationDisclosure": 1,
-                "denialOfService": 0,
-                "elevationOfPrivilege": 0
-              }
+              "threats": [],
+              "trustBoundaryIds": []
             },
             "labels": [
               "Data jadwal, status kelas & hasil rekap"
@@ -1664,7 +1353,7 @@
               "protocol": "Koneksi database internal",
               "threats": [
                 {
-                  "id": "c5c8602d-bd3a-5f3e-a16f-373a58708335",
+                  "id": "ea28dfde-2bf9-5033-8b36-911394fe23fa",
                   "title": "Perubahan catatan kehadiran tanpa otorisasi",
                   "status": "Open",
                   "severity": "High",
@@ -1739,12 +1428,12 @@
               "protocol": "HTTP(S) – enkripsi belum ditentukan (A5)",
               "threats": [
                 {
-                  "id": "513956bb-ee54-5612-8d8f-6e5bc3fb15e5",
+                  "id": "a455e667-462a-5a6b-8259-83a7aa5e69d5",
                   "title": "Pemakaian ulang atau pemalsuan token QR",
                   "status": "Open",
                   "severity": "High",
                   "type": "Tampering",
-                  "description": "Jika token dapat diprediksi, diubah, atau digunakan kembali tanpa validasi kuat, penyerang dapat mengirim permintaan untuk sesi yang bukan miliknya atau menggunakan token lama. Hal ini dapat menyebabkan presensi tercatat pada sesi yang salah. Ancaman ini juga bersifat Spoofing karena penyerang menyamar sebagai pemegang sesi yang sah.",
+                  "description": "Jika token dapat diprediksi, diubah, atau digunakan kembali tanpa validasi kuat, penyerang dapat mengirim permintaan untuk sesi yang bukan miliknya atau menggunakan token lama. Hal ini dapat menyebabkan presensi tercatat pada sesi yang salah.",
                   "mitigation": "Menggunakan token acak yang sulit ditebak, mengaitkan token dengan kelas dan sesi presensi, memeriksa masa berlaku token di backend, serta menolak token yang sudah digunakan.",
                   "modelType": "STRIDE",
                   "new": false,
@@ -1752,7 +1441,7 @@
                   "score": "6"
                 },
                 {
-                  "id": "43516b74-0389-512a-8fac-10447b5cebda",
+                  "id": "7d706cb7-6029-5cb3-9cbe-d05c7dbbe7bc",
                   "title": "Banjir permintaan yang menghambat layanan",
                   "status": "Open",
                   "severity": "High",
@@ -1793,6 +1482,81 @@
               {
                 "x": 770,
                 "y": 465
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null,
+                "strokeWidth": 2.5
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "QR Code sesi (layar kelas → browser)",
+              "description": "QR Code berisi token sesi yang ditampilkan dosen di layar kelas, lalu dipindai mahasiswa menggunakan browser atau aplikasi web.",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "Visual (pemindaian kamera)",
+              "threats": [
+                {
+                  "id": "fc03f96b-04f0-5d12-9bcd-1e9187c9a431",
+                  "title": "Pengungkapan token melalui QR Code yang difoto",
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "description": "Jika QR Code difoto pihak lain, pihak tersebut dapat mengirim token sebelum kedaluwarsa dan mencoba mencatat presensi tanpa kehadiran mahasiswa yang sah. Hal ini dapat menyebabkan presensi dilakukan oleh pihak yang tidak hadir secara langsung.",
+                  "mitigation": "Menggunakan token QR dengan masa berlaku singkat dan sekali pakai, mengaitkan token dengan sesi presensi, serta memeriksa aktivitas presensi yang mencurigakan.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 7,
+                  "score": "9"
+                }
+              ],
+              "trustBoundaryIds": [],
+              "threatFrequency": {
+                "spoofing": 0,
+                "tampering": 0,
+                "repudiation": 0,
+                "informationDisclosure": 1,
+                "denialOfService": 0,
+                "elevationOfPrivilege": 0
+              }
+            },
+            "labels": [
+              "QR Code sesi (layar kelas → browser)"
+            ],
+            "id": "f60b66cf-454c-5218-a1fd-b841e8ca9ebd",
+            "source": {
+              "cell": "dad247cd-8047-47b9-bcb6-cf367a9e4f3e",
+              "port": "1d481793-affb-4280-a7aa-e11655e9307f"
+            },
+            "target": {
+              "cell": "6b6bea45-3f59-4ff8-8a84-5bc84da0e6f3",
+              "port": "1d481793-affb-4280-a7aa-e11655e9307f"
+            },
+            "vertices": [
+              {
+                "x": 330,
+                "y": 340
               }
             ]
           }

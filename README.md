@@ -52,6 +52,7 @@ Sistem presensi perkuliahan berbasis web yang memfasilitasi pencatatan kehadiran
 | Autentikasi Kampus | Backend Presensi | Status validasi sesi & atribut peran | Tidak |
 | Backend Presensi | Database Akademik | Query cek kelas/sesi, simpan hadir & query rekap | Tidak |
 | Database Akademik | Backend Presensi | Data jadwal, status kelas & hasil rekap | Tidak |
+| Dosen Pengampu | Mahasiswa | QR Code sesi (layar kelas → browser) | Tidak |
 
 
 ## 5. Analisis Ancaman STRIDE
@@ -60,16 +61,16 @@ Ancaman dimasukkan langsung ke file model Threat Dragon (tautan per elemen DFD) 
 
 | ID | Ancaman | STRIDE | Elemen DFD | Kemungkinan | Dampak | Skor | Risiko |
 | :--- | :--- | :---: | :--- | :---: | :---: | :---: | :---: |
-| T1 | Penggunaan akun mahasiswa yang dicuri | S | Mahasiswa, Autentikasi Kampus | 2 | 3 | 6 | Tinggi |
-| T2 | Pembukaan sesi oleh pengguna bukan dosen | E | Backend Presensi | 2 | 3 | 6 | Tinggi |
-| T3 | Pemakaian ulang atau pemalsuan token QR | T/S | ID/token sesi QR & token autentikasi mahasiswa | 2 | 3 | 6 | Tinggi |
-| T4 | Perubahan catatan kehadiran tanpa otorisasi | T | Database Akademik, Data jadwal, status kelas & hasil rekap, Query cek kelas/sesi, simpan hadir & query rekap | 2 | 3 | 6 | Tinggi |
-| T5 | Penyangkalan terhadap tindakan presensi atau perubahan data | R | Dosen Pengampu, Mahasiswa, Admin Akademik, Backend Presensi, Database Akademik | 2 | 2 | 4 | Sedang |
-| T6 | Kebocoran rekap presensi kepada pihak yang tidak berwenang | I | Database Akademik, Data QR code sesi (5 menit) & daftar hadir, Data rekap presensi seluruh kelas, Status konfirmasi kehadiran, Data jadwal, status kelas & hasil rekap | 2 | 3 | 6 | Tinggi |
-| T7 | Pengungkapan token melalui QR Code yang difoto | I | Data QR code sesi (5 menit) & daftar hadir | 3 | 3 | 9 | Tinggi |
-| T8 | Banjir permintaan yang menghambat layanan | D | Backend Presensi, Permintaan buka/tutup sesi & token dosen, Permintaan rekap kehadiran seluruh kelas, Permintaan verifikasi token & peran pengguna, Status validasi sesi & atribut peran, ID/token sesi QR & token autentikasi mahasiswa | 2 | 3 | 6 | Tinggi |
+| T1 | Penggunaan akun mahasiswa yang dicuri | S | Mahasiswa (Actor) | 2 | 3 | 6 | Tinggi |
+| T2 | Pembukaan sesi oleh pengguna bukan dosen | E | Backend Presensi (Process) | 2 | 3 | 6 | Tinggi |
+| T3 | Pemakaian ulang atau pemalsuan token QR | T/S | Aliran "ID/token sesi QR & token autentikasi mahasiswa" | 2 | 3 | 6 | Tinggi |
+| T4 | Perubahan catatan kehadiran tanpa otorisasi | T | Aliran "Query cek kelas/sesi, simpan hadir & query rekap" | 2 | 3 | 6 | Tinggi |
+| T5 | Penyangkalan terhadap tindakan presensi atau perubahan data | R | Database Akademik (Data Store) | 2 | 2 | 4 | Sedang |
+| T6 | Kebocoran rekap presensi kepada pihak yang tidak berwenang | I | Aliran "Data rekap presensi seluruh kelas" | 2 | 3 | 6 | Tinggi |
+| T7 | Pengungkapan token melalui QR Code yang difoto | I | Aliran "QR Code sesi (layar kelas → browser)" | 3 | 3 | 9 | Tinggi |
+| T8 | Banjir permintaan yang menghambat layanan | D | Aliran "ID/token sesi QR & token autentikasi mahasiswa" | 2 | 3 | 6 | Tinggi |
 
-Ancaman yang sama ditautkan ke setiap elemen DFD yang terkait sehingga semua elemen memiliki ancaman pada laporan Threat Dragon. Deskripsi (skenario dan dampak) serta mitigasi tersedia pada isian *Description* dan *Mitigations* di model.
+Setiap ancaman ditautkan ke satu elemen DFD sesuai kolom "Elemen DFD" pada laporan analisis; elemen yang ditandai merah adalah elemen yang memiliki ancaman. Deskripsi (skenario dan dampak) serta mitigasi tersedia pada isian *Description* dan *Mitigations* di model.
 
 ### Kesimpulan Evaluasi Risiko
 Ancaman T7 (pengungkapan token melalui QR code yang difoto) memperoleh skor tertinggi (9) sehingga perlu mendapat perhatian utama. T1, T2, T3, T4, T6, dan T8 juga berisiko tinggi karena dapat menyebabkan presensi tidak sah, perubahan data, kebocoran informasi, atau terganggunya layanan, sedangkan T5 berisiko sedang karena dampak utamanya adalah kesulitan membuktikan tindakan pengguna saat sengketa. Mitigasi yang disusun merupakan rekomendasi kontrol keamanan yang dapat diterapkan sesuai kebutuhan sistem.
