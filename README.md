@@ -33,7 +33,7 @@ Sistem presensi perkuliahan berbasis web yang memfasilitasi pencatatan kehadiran
 | **Data Store** | Database Akademik | Menyimpan data jadwal, keanggotaan kelas, sesi aktif, dan catatan kehadiran. |
 
 ### 4.2 Trust Boundary (Batas Kepercayaan)
-* **Trust Boundary: Perangkat Klien (publik) ↔ Jaringan Internal Kampus** — Memisahkan zona perangkat pengguna/publik (`Dosen Pengampu`, `Mahasiswa`, `Admin Akademik`) yang berada di luar kendali penuh institusi dengan zona layanan internal kampus (`Backend Presensi`, `Autentikasi Kampus`, `Database Akademik`).
+* **Trust Boundary: Jaringan Internal Kampus** (kotak garis putus-putus) — Memisahkan zona perangkat pengguna/publik (`Dosen Pengampu`, `Mahasiswa`, `Admin Akademik`) yang berada di luar kendali penuh institusi dengan zona layanan internal kampus (`Backend Presensi`, `Autentikasi Kampus`, `Database Akademik`).
 
 ### 4.3 Daftar Aliran Data (Data Flow)
 | Sumber | Tujuan | Label Aliran Data | Melintasi Trust Boundary |
@@ -52,27 +52,27 @@ Sistem presensi perkuliahan berbasis web yang memfasilitasi pencatatan kehadiran
 
 ## 5. Analisis Ancaman STRIDE
 
-Ancaman dimasukkan langsung ke file model Threat Dragon (tautan per elemen DFD) sehingga laporan dapat di-generate melalui fitur **Report**. Skor risiko = kemungkinan (1–3) × dampak (1–3); 1–2 rendah, 3–4 sedang, 6–9 tinggi.
+Ancaman dimasukkan langsung ke file model Threat Dragon (tautan per elemen DFD) sehingga laporan dapat di-generate melalui fitur **Report**. Skor risiko (kolom *Score*) = kemungkinan (1–3) × dampak (1–3); 1–2 rendah, 3–4 sedang, 6–9 tinggi.
 
 | ID | Ancaman | STRIDE | Elemen DFD | Skor | Risiko |
 | :--- | :--- | :--- | :--- | :---: | :---: |
-| T1 | Presensi atas nama mahasiswa lain menggunakan akun/token yang dicuri atau dititipkan | Spoofing | Mahasiswa | 6 (K2 × D3) | Tinggi |
-| T2 | Pembukaan/penutupan sesi kelas oleh pengguna yang bukan dosen pengampu | Elevation of privilege | Backend Presensi | 6 (K2 × D3) | Tinggi |
-| T3 | Pemalsuan, manipulasi, atau pemakaian ulang token QR sesi | Tampering | ID/token sesi QR & token autentikasi mahasiswa | 6 (K2 × D3) | Tinggi |
-| T4 | Perubahan catatan kehadiran di Database Akademik tanpa otorisasi | Tampering | Database Akademik | 6 (K2 × D3) | Tinggi |
-| T5 | Penyangkalan atas pembukaan/penutupan sesi, pemindaian, atau perubahan data presensi | Repudiation | Backend Presensi | 4 (K2 × D2) | Sedang |
-| T6 | Kebocoran rekap/daftar hadir kepada pihak yang tidak berwenang | Information disclosure | Data rekap presensi seluruh kelas | 6 (K2 × D3) | Tinggi |
-| T7 | Token sesi bocor melalui QR code yang difoto dan disebarkan | Information disclosure | Data QR code sesi (5 menit) & daftar hadir | 9 (K3 × D3) | Tinggi |
-| T8 | Banjir permintaan presensi/rekap yang membuat Backend Presensi lambat atau tidak tersedia | Denial of service | Backend Presensi | 6 (K2 × D3) | Tinggi |
-| T9 | Catatan hadir ganda akibat pengiriman berulang/race condition | Tampering | Query cek kelas/sesi, simpan hadir & query rekap | 4 (K2 × D2) | Sedang |
-| T10 | Layanan Autentikasi Kampus tidak tersedia saat jendela presensi 5 menit | Denial of service | Autentikasi Kampus | 4 (K2 × D2) | Sedang |
-| T11 | Pengambilalihan akun dosen untuk membuka sesi dan memantau daftar hadir | Spoofing | Dosen Pengampu | 6 (K2 × D3) | Tinggi |
-| T12 | Admin menyangkal telah mengakses atau mengunduh rekap kehadiran seluruh kelas | Repudiation | Admin Akademik | 4 (K2 × D2) | Sedang |
-| T13 | Permintaan buka/tutup sesi dipalsukan melalui CSRF dari browser dosen | Tampering | Permintaan buka/tutup sesi & token dosen | 4 (K2 × D2) | Sedang |
-| T14 | Permintaan rekap seluruh kelas tanpa batas membebani Database Akademik | Denial of service | Permintaan rekap kehadiran seluruh kelas | 4 (K2 × D2) | Sedang |
-| T15 | Pesan status presensi yang terlalu rinci membuka peluang enumerasi sesi dan keanggotaan kelas | Information disclosure | Status konfirmasi kehadiran | 2 (K2 × D1) | Rendah |
-| T16 | Token pengguna bocor saat diteruskan ke Autentikasi Kampus atau tercatat di log | Information disclosure | Permintaan verifikasi token & peran pengguna | 3 (K1 × D3) | Sedang |
-| T17 | Respons validasi token dan atribut peran dipalsukan atau diubah | Tampering | Status validasi sesi & atribut peran | 3 (K1 × D3) | Sedang |
-| T18 | Penyadapan data keanggotaan kelas dan hasil rekap pada koneksi database internal | Information disclosure | Data jadwal, status kelas & hasil rekap | 3 (K1 × D3) | Sedang |
+| T1 | Presensi atas nama mahasiswa lain menggunakan akun/token yang dicuri atau dititipkan | Spoofing | Mahasiswa | 6 | Tinggi |
+| T2 | Pembukaan/penutupan sesi kelas oleh pengguna yang bukan dosen pengampu | Elevation of privilege | Backend Presensi | 6 | Tinggi |
+| T3 | Pemalsuan, manipulasi, atau pemakaian ulang token QR sesi | Tampering | ID/token sesi QR & token autentikasi mahasiswa | 6 | Tinggi |
+| T4 | Perubahan catatan kehadiran di Database Akademik tanpa otorisasi | Tampering | Database Akademik | 6 | Tinggi |
+| T5 | Penyangkalan atas pembukaan/penutupan sesi, pemindaian, atau perubahan data presensi | Repudiation | Backend Presensi | 4 | Sedang |
+| T6 | Kebocoran rekap/daftar hadir kepada pihak yang tidak berwenang | Information disclosure | Data rekap presensi seluruh kelas | 6 | Tinggi |
+| T7 | Token sesi bocor melalui QR code yang difoto dan disebarkan | Information disclosure | Data QR code sesi (5 menit) & daftar hadir | 9 | Tinggi |
+| T8 | Banjir permintaan presensi/rekap yang membuat Backend Presensi lambat atau tidak tersedia | Denial of service | Backend Presensi | 6 | Tinggi |
+| T9 | Catatan hadir ganda akibat pengiriman berulang/race condition | Tampering | Query cek kelas/sesi, simpan hadir & query rekap | 4 | Sedang |
+| T10 | Layanan Autentikasi Kampus tidak tersedia saat jendela presensi 5 menit | Denial of service | Autentikasi Kampus | 4 | Sedang |
+| T11 | Pengambilalihan akun dosen untuk membuka sesi dan memantau daftar hadir | Spoofing | Dosen Pengampu | 6 | Tinggi |
+| T12 | Admin menyangkal telah mengakses atau mengunduh rekap kehadiran seluruh kelas | Repudiation | Admin Akademik | 4 | Sedang |
+| T13 | Permintaan buka/tutup sesi dipalsukan melalui CSRF dari browser dosen | Tampering | Permintaan buka/tutup sesi & token dosen | 4 | Sedang |
+| T14 | Permintaan rekap seluruh kelas tanpa batas membebani Database Akademik | Denial of service | Permintaan rekap kehadiran seluruh kelas | 4 | Sedang |
+| T15 | Pesan status presensi yang terlalu rinci membuka peluang enumerasi sesi dan keanggotaan kelas | Information disclosure | Status konfirmasi kehadiran | 2 | Rendah |
+| T16 | Token pengguna bocor saat diteruskan ke Autentikasi Kampus atau tercatat di log | Information disclosure | Permintaan verifikasi token & peran pengguna | 3 | Sedang |
+| T17 | Respons validasi token dan atribut peran dipalsukan atau diubah | Tampering | Status validasi sesi & atribut peran | 3 | Sedang |
+| T18 | Penyadapan data keanggotaan kelas dan hasil rekap pada koneksi database internal | Information disclosure | Data jadwal, status kelas & hasil rekap | 3 | Sedang |
 
-Skenario, dampak, asumsi, justifikasi skor, dan mitigasi lengkap setiap ancaman tersedia pada isian *Description* dan *Mitigations* di model.
+Deskripsi (skenario dan dampak) serta mitigasi lengkap setiap ancaman tersedia pada isian *Description* dan *Mitigations* di model.
