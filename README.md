@@ -66,5 +66,13 @@ Ancaman dimasukkan langsung ke file model Threat Dragon (tautan per elemen DFD) 
 | T8 | Banjir permintaan presensi/rekap yang membuat Backend Presensi lambat atau tidak tersedia | Denial of service | Backend Presensi | 6 (K2 × D3) | Tinggi |
 | T9 | Catatan hadir ganda akibat pengiriman berulang/race condition | Tampering | Query cek kelas/sesi, simpan hadir & query rekap | 4 (K2 × D2) | Sedang |
 | T10 | Layanan Autentikasi Kampus tidak tersedia saat jendela presensi 5 menit | Denial of service | Autentikasi Kampus | 4 (K2 × D2) | Sedang |
+| T11 | Pengambilalihan akun dosen untuk membuka sesi dan memantau daftar hadir | Spoofing | Dosen Pengampu | 6 (K2 × D3) | Tinggi |
+| T12 | Admin menyangkal telah mengakses atau mengunduh rekap kehadiran seluruh kelas | Repudiation | Admin Akademik | 4 (K2 × D2) | Sedang |
+| T13 | Permintaan buka/tutup sesi dipalsukan melalui CSRF dari browser dosen | Tampering | Permintaan buka/tutup sesi & token dosen | 4 (K2 × D2) | Sedang |
+| T14 | Permintaan rekap seluruh kelas tanpa batas membebani Database Akademik | Denial of service | Permintaan rekap kehadiran seluruh kelas | 4 (K2 × D2) | Sedang |
+| T15 | Pesan status presensi yang terlalu rinci membuka peluang enumerasi sesi dan keanggotaan kelas | Information disclosure | Status konfirmasi kehadiran | 2 (K2 × D1) | Rendah |
+| T16 | Token pengguna bocor saat diteruskan ke Autentikasi Kampus atau tercatat di log | Information disclosure | Permintaan verifikasi token & peran pengguna | 3 (K1 × D3) | Sedang |
+| T17 | Respons validasi token dan atribut peran dipalsukan atau diubah | Tampering | Status validasi sesi & atribut peran | 3 (K1 × D3) | Sedang |
+| T18 | Penyadapan data keanggotaan kelas dan hasil rekap pada koneksi database internal | Information disclosure | Data jadwal, status kelas & hasil rekap | 3 (K1 × D3) | Sedang |
 
 Skenario, dampak, asumsi, justifikasi skor, dan mitigasi lengkap setiap ancaman tersedia pada isian *Description* dan *Mitigations* di model.
