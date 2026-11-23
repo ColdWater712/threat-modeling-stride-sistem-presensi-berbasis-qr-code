@@ -5,7 +5,7 @@
   "summary": {
     "title": "threat-modeling-stride-sistem-presensi-berbasis-qr-code",
     "owner": "ColdWater712",
-    "description": "Sistem presensi perkuliahan berbasis web yang memfasilitasi dosen membuka sesi presensi berdurasi 5 menit dengan membangkitkan QR code, mahasiswa memindai QR code menggunakan akun kampus, Backend Presensi memvalidasi sesi dan keanggotaan kelas sebelum menyimpan kehadiran ke Database Akademik, serta admin akademik memantau rekap kehadiran seluruh kelas.\nRuang Lingkup: Pembukaan/penutupan sesi, pemindaian QR, validasi kehadiran, dan pembacaan rekap. Pendaftaran mata kuliah (KRS) dan perubahan nilai berada di luar lingkup.\nAsumsi Teknis:\n1.\t(Asumsi) Komunikasi jaringan menggunakan HTTPS/TLS, namun payload pada sisi klien tetap dapat diinspeksi atau dimodifikasi oleh pengguna.\n2.\t(Asumsi) QR code yang ditampilkan dosen bersifat statis selama masa berlaku 5 menit.\n3.\t(Asumsi) Sistem belum memiliki validasi lokasi (GPS/Geofencing) atau pembatasan IP Wi-Fi kampus saat pemindaian QR.\n4.\t(Asumsi) Layanan Autentikasi Kampus menerbitkan token sesi/JWT setelah login.\n5.\t(Asumsi) Sistem belum memiliki audit log immutable terpisah untuk mencatat riwayat perubahan status sesi.\n",
+    "description": "Pendahuluan: Model ini menganalisis rancangan Sistem Presensi Perkuliahan Berbasis QR Code menggunakan pendekatan STRIDE. Fokus analisis berada pada aliran data antara perangkat pengguna, Backend Presensi, layanan autentikasi kampus, dan Database Akademik, untuk menunjukkan aset yang perlu dilindungi, batas analisis, potensi ancaman, serta mitigasi yang dapat dipertimbangkan sebelum sistem diimplementasikan. Analisis menggunakan model arsitektur tingkat komponen; kode sumber, deployment cloud, dan eksploitasi nyata tidak termasuk dalam ruang lingkup. DFD menjadi dasar untuk menghubungkan setiap ancaman dengan elemen atau aliran data yang relevan.\n\nTujuan layanan: Sistem digunakan untuk mencatat kehadiran mahasiswa pada perkuliahan menggunakan QR Code yang dibuat oleh dosen. QR Code memiliki masa berlaku lima menit. Setelah menerima permintaan presensi, Backend Presensi memvalidasi identitas pengguna, sesi, dan keanggotaan kelas sebelum menyimpan catatan kehadiran.\n\nAktor dan komponen:\n- Mahasiswa: masuk dengan akun kampus, memindai QR Code, dan mengirim permintaan presensi.\n- Dosen Pengampu: membuka atau menutup sesi presensi dan melihat daftar hadir kelas yang diampu.\n- Admin Akademik: melihat rekap presensi untuk seluruh kelas sesuai kewenangannya.\n- Browser atau aplikasi web: media interaksi pengguna dengan layanan presensi (direpresentasikan menyatu dengan aktor pada DFD).\n- Backend Presensi: memvalidasi permintaan, menerapkan aturan bisnis, dan mengatur akses ke data.\n- Autentikasi Kampus: memvalidasi identitas serta atribut peran pengguna.\n- Database Akademik: menyimpan data kelas, sesi, dan catatan kehadiran serta menyediakan data rekap.\n\nAset yang perlu dilindungi:\n- Identitas, akun, dan atribut peran pengguna.\n- Token atau QR Code sesi presensi.\n- Data keanggotaan kelas, jadwal, dan status sesi.\n- Catatan kehadiran dan rekap presensi.\n- Hak akses dosen dan admin akademik.\n- Ketersediaan Backend Presensi dan Database Akademik.\n- Jejak audit pembukaan sesi, pemindaian, penutupan, dan pembacaan rekap.\n\nAlur bisnis utama: Dosen yang berwenang membuka sesi presensi untuk kelas yang diampu. Backend membuat token atau QR Code yang berlaku selama lima menit dan token tersebut ditampilkan kepada mahasiswa. Mahasiswa masuk dengan akun kampus, memindai QR Code, lalu mengirim identitas sesi dan data autentikasi ke Backend Presensi. Backend memeriksa identitas, peran, keanggotaan kelas, masa berlaku sesi, dan status presensi sebelum menyimpan catatan ke Database Akademik. Dosen atau admin kemudian meminta daftar hadir atau rekap sesuai kewenangannya.\n\nRuang lingkup: Mencakup pembukaan dan penutupan sesi, pembuatan dan penggunaan QR Code, pengiriman permintaan presensi, validasi, penyimpanan catatan kehadiran, serta pembacaan daftar hadir dan rekap. Pendaftaran mata kuliah (KRS), perubahan nilai, infrastruktur fisik, deployment cloud, pentest, dan eksploitasi nyata berada di luar lingkup.\n\nAsumsi kerja:\n- A1: Backend Presensi menjadi pihak yang menentukan keputusan akhir autentikasi dan otorisasi; pemeriksaan di browser tidak dianggap cukup.\n- A2: Detail MFA, durasi sesi login, dan pencabutan sesi pada layanan autentikasi kampus belum ditentukan.\n- A3: QR Code dapat dilihat atau difoto oleh orang yang berada di sekitar ruang kelas.\n- A4: Mekanisme audit untuk pembukaan sesi, pemindaian, penutupan, dan pembacaan rekap belum dijelaskan (belum ada audit log immutable terpisah).\n- A5: Enkripsi komunikasi, pembatasan laju permintaan, dan perlindungan terhadap pengiriman ulang token belum dijelaskan.\n- A6: Payload request pada sisi klien dapat diinspeksi atau dimodifikasi pengguna menggunakan alat bantu seperti proxy.\n- A7: QR Code yang ditampilkan dosen bersifat statis selama masa berlaku 5 menit.\n- A8: Sistem belum memiliki validasi lokasi (GPS/geofencing) atau pembatasan IP Wi-Fi kampus saat pemindaian QR.\n- A9: Layanan Autentikasi Kampus menerbitkan token sesi/JWT setelah login yang dikirim pada setiap permintaan ke Backend Presensi.\n\nMetode evaluasi risiko: Kemungkinan dan dampak dinilai dengan skala 1-3 (1 rendah, 2 sedang, 3 tinggi). Skor risiko = kemungkinan x dampak (kolom Score). Skor 1-2 = risiko rendah (Low), 3-4 = sedang (Medium), 6-9 = tinggi (High). Skor digunakan untuk menentukan tingkat risiko dan prioritas penanganan.\n\nEvaluasi risiko (Kemungkinan x Dampak = Skor, Tingkat):\n- T1 Penggunaan akun mahasiswa yang dicuri: 2 x 3 = 6, Tinggi\n- T2 Pembukaan sesi oleh pengguna bukan dosen: 2 x 3 = 6, Tinggi\n- T3 Pemakaian ulang atau pemalsuan token QR: 2 x 3 = 6, Tinggi\n- T4 Perubahan catatan kehadiran tanpa otorisasi: 2 x 3 = 6, Tinggi\n- T5 Penyangkalan terhadap tindakan presensi atau perubahan data: 2 x 2 = 4, Sedang\n- T6 Kebocoran rekap presensi kepada pihak yang tidak berwenang: 2 x 3 = 6, Tinggi\n- T7 Pengungkapan token melalui QR Code yang difoto: 3 x 3 = 9, Tinggi\n- T8 Banjir permintaan yang menghambat layanan: 2 x 3 = 6, Tinggi\n- T9 Catatan hadir ganda akibat pengiriman berulang: 2 x 2 = 4, Sedang\n- T10 Autentikasi Kampus tidak tersedia saat jendela presensi: 2 x 2 = 4, Sedang\n- T11 Pengambilalihan akun dosen: 2 x 3 = 6, Tinggi\n- T12 Admin menyangkal mengakses rekap: 2 x 2 = 4, Sedang\n- T13 Permintaan buka/tutup sesi dipalsukan melalui CSRF: 2 x 2 = 4, Sedang\n- T14 Permintaan rekap tanpa batas membebani database: 2 x 2 = 4, Sedang\n- T15 Pesan status presensi terlalu rinci (enumerasi): 2 x 1 = 2, Rendah\n- T16 Token pengguna bocor ke jaringan internal atau log: 1 x 3 = 3, Sedang\n- T17 Respons validasi token dan peran dipalsukan: 1 x 3 = 3, Sedang\n- T18 Penyadapan koneksi database internal: 1 x 3 = 3, Sedang\n\nKesimpulan evaluasi risiko: Sebagian besar ancaman utama memiliki tingkat risiko tinggi. Ancaman T7 memperoleh skor tertinggi, yaitu 9, karena QR Code yang difoto dapat digunakan oleh pihak lain untuk melakukan presensi selama token masih berlaku, sehingga perlu mendapat perhatian utama. Ancaman T1, T2, T3, T4, T6, T8, dan T11 juga berisiko tinggi karena dapat menyebabkan presensi tidak sah, perubahan data, kebocoran informasi, atau terganggunya layanan. Ancaman T5 berisiko sedang karena dampak utamanya adalah kesulitan membuktikan tindakan pengguna ketika terjadi sengketa atau perubahan data. Penerapan mitigasi yang sesuai diharapkan dapat mengurangi risiko penyalahgunaan sistem, menjaga kerahasiaan dan keutuhan data presensi, serta mempertahankan ketersediaan layanan. Mitigasi yang disusun merupakan rekomendasi kontrol keamanan yang dapat diterapkan sesuai dengan kebutuhan sistem.",
     "id": 0
   },
   "detail": {
@@ -338,7 +338,7 @@
                   "severity": "High",
                   "type": "Spoofing",
                   "description": "Jika penyerang atau rekan mahasiswa memperoleh kredensial akun kampus atau token sesi/JWT milik seorang mahasiswa (phishing, perangkat bersama, atau kredensial sengaja dititipkan), maka ia dapat mengirim permintaan presensi ke Backend Presensi sebagai mahasiswa tersebut tanpa mahasiswa itu hadir. Hal ini dapat menyebabkan catatan kehadiran tidak sah tersimpan di Database Akademik sehingga integritas data akademik dan keabsahan rekap terganggu.",
-                  "mitigation": "Menerapkan autentikasi multifaktor (MFA) pada login SSO kampus, memvalidasi token di backend pada setiap request beserta pembatasan umur token, mengikat sesi login ke perangkat, serta mendeteksi anomali satu perangkat atau IP yang mengirim presensi untuk banyak akun dan memberi notifikasi kepada mahasiswa saat ada presensi baru pada akunnya.",
+                  "mitigation": "Menggunakan autentikasi yang kuat dan menerapkan autentikasi multifaktor (MFA) pada login SSO kampus, memvalidasi sesi dan token pengguna di backend pada setiap request, membatasi masa berlaku sesi, mengikat sesi login ke perangkat, mendeteksi anomali satu perangkat atau IP yang mengirim presensi untuk banyak akun, serta memberikan notifikasi kepada mahasiswa jika terdapat aktivitas login atau presensi yang mencurigakan.",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 1,
@@ -632,7 +632,7 @@
                   "severity": "Medium",
                   "type": "Repudiation",
                   "description": "Jika Backend Presensi tidak mencatat identitas pelaku, waktu, sesi, alamat IP/perangkat, dan hasil setiap operasi, maka dosen dapat menyangkal telah menutup sesi lebih awal dan mahasiswa dapat menyangkal pengiriman presensi atau mengklaim presensinya hilang. Hal ini dapat menyebabkan sengketa kehadiran tidak dapat diselesaikan dengan bukti dan menyulitkan investigasi penyalahgunaan sistem.",
-                  "mitigation": "Mencatat setiap pembukaan dan penutupan sesi, pemindaian presensi, perubahan data, dan pembacaan rekap beserta ID pengguna, peran, ID sesi, waktu server, dan IP perangkat ke dalam audit log append-only yang terpisah dari Database Akademik, serta menampilkan bukti presensi berupa waktu dan ID transaksi kepada mahasiswa.",
+                  "mitigation": "Menyimpan audit log yang terlindungi (append-only dan terpisah dari Database Akademik) untuk setiap pembukaan dan penutupan sesi, pemindaian presensi termasuk yang ditolak, perubahan data, dan pembacaan rekap, dengan mencatat identitas pengguna, peran, ID sesi, waktu server, hasil operasi, dan IP perangkat, serta menampilkan bukti presensi berupa waktu dan ID transaksi kepada mahasiswa.",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 5,
@@ -645,7 +645,7 @@
                   "severity": "High",
                   "type": "Denial of service",
                   "description": "Jika endpoint presensi dan rekap menerima permintaan tanpa pembatasan laju, maka penyerang (atau skrip) dapat mengirim permintaan dalam jumlah besar sehingga proses validasi dan pencatatan menjadi lambat atau gagal di dalam jendela 5 menit. Hal ini dapat menyebabkan mahasiswa yang hadir gagal melakukan presensi sebelum sesi berakhir dan layanan terganggu untuk banyak kelas.",
-                  "mitigation": "Menerapkan rate limiting per akun, perangkat, dan IP pada endpoint presensi dan rekap, menolak request tidak valid sebelum melakukan query ke database, menjalankan rekap besar secara asinkron dengan paginasi atau cache, serta memantau lonjakan trafik pada jam kuliah padat.",
+                  "mitigation": "Menerapkan rate limiting per akun, perangkat, dan IP pada endpoint presensi dan rekap, melakukan validasi input lebih awal sebelum query ke database, menetapkan batas kapasitas dan jumlah permintaan, memberikan perlindungan khusus pada endpoint rekap melalui paginasi, cache, atau proses asinkron, serta memantau lonjakan trafik pada jam kuliah padat.",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 8,
@@ -935,7 +935,7 @@
                   "severity": "High",
                   "type": "Tampering",
                   "description": "Jika operasi tulis ke tabel kehadiran tidak dibatasi (akun database backend memiliki hak berlebih, endpoint ubah status tidak memeriksa hak, atau akun admin/dosen disalahgunakan), maka pihak yang tidak berwenang dapat menambah, mengubah, atau menghapus status hadir mahasiswa. Hal ini dapat menyebabkan data kehadiran dan rekap menjadi tidak akurat serta memengaruhi syarat kehadiran ujian mahasiswa.",
-                  "mitigation": "Menerapkan prinsip least privilege pada akun database backend, membatasi koreksi kehadiran hanya untuk dosen pengampu dan admin dengan otorisasi per kelas, menggunakan query terparameter untuk mencegah SQL injection, serta mencatat setiap perubahan data kehadiran (nilai lama, nilai baru, pelaku, dan waktu) pada audit log terpisah.",
+                  "mitigation": "Membatasi hak akses untuk mengubah data presensi melalui kontrol akses pada setiap operasi tulis, memvalidasi identitas dan sesi pengguna, menerapkan prinsip least privilege pada akun database backend, menggunakan query terparameter untuk mencegah SQL injection, serta mencatat setiap perubahan data kehadiran (nilai lama, nilai baru, pelaku, dan waktu) pada audit log terpisah.",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 4,
@@ -980,9 +980,9 @@
               "reasonOutOfScope": "",
               "hasOpenThreats": true,
               "isBidirectional": false,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": true,
-              "protocol": "HTTPS",
+              "protocol": "HTTP(S) – enkripsi belum ditentukan (A5)",
               "threats": [
                 {
                   "id": "bd9d82e4-9bdb-5fb6-80af-4f3567db58cc",
@@ -990,8 +990,8 @@
                   "status": "Open",
                   "severity": "High",
                   "type": "Information disclosure",
-                  "description": "Jika QR code yang ditampilkan di layar kelas difoto lalu dikirim ke grup chat, maka mahasiswa yang tidak hadir dapat memindainya dari jarak jauh dan mengirim presensi selama token masih berlaku (hingga 5 menit). Hal ini dapat menyebabkan kehadiran tercatat untuk mahasiswa yang tidak hadir secara fisik sehingga tujuan presensi tidak tercapai.",
-                  "mitigation": "Menerapkan QR code dinamis yang tokennya dirotasi otomatis setiap 10–30 detik, membatasi pemindaian hanya dari jaringan Wi-Fi/IP kampus atau melalui validasi geofencing ruang kelas, mendeteksi anomali presensi dari luar kampus, serta menyediakan verifikasi acak oleh dosen pada kelas yang terindikasi anomali.",
+                  "description": "Jika QR code yang ditampilkan di layar kelas difoto lalu dikirim ke grup chat, maka mahasiswa yang tidak hadir dapat memindainya dari jarak jauh dan mengirim presensi selama token masih berlaku (hingga 5 menit). Hal ini dapat menyebabkan kehadiran tercatat untuk mahasiswa yang tidak hadir secara fisik sehingga tujuan presensi tidak tercapai. Ancaman ini terjadi pada QR Code yang ditampilkan dosen di layar kelas dan dipindai mahasiswa melalui browser.",
+                  "mitigation": "Menggunakan token QR dengan masa berlaku singkat yang dirotasi otomatis setiap 10–30 detik (QR dinamis), mengikat token dengan sesi dan konteks kelas, membatasi setiap token hanya dapat dipakai sekali oleh setiap mahasiswa, membatasi pemindaian dari jaringan Wi-Fi/IP kampus atau melalui validasi geofencing ruang kelas, memeriksa aktivitas presensi yang mencurigakan, serta menyediakan verifikasi acak oleh dosen pada kelas yang terindikasi anomali.",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 7,
@@ -1061,9 +1061,9 @@
               "reasonOutOfScope": "",
               "hasOpenThreats": true,
               "isBidirectional": false,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": true,
-              "protocol": "HTTPS",
+              "protocol": "HTTP(S) – enkripsi belum ditentukan (A5)",
               "threats": [
                 {
                   "id": "620a1bb0-ddd2-52dc-98f0-1011924caf5f",
@@ -1138,9 +1138,9 @@
               "reasonOutOfScope": "",
               "hasOpenThreats": true,
               "isBidirectional": false,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": true,
-              "protocol": "HTTPS",
+              "protocol": "HTTP(S) – enkripsi belum ditentukan (A5)",
               "threats": [
                 {
                   "id": "facea8ac-b043-5da1-93ac-39cc9fbde9db",
@@ -1215,9 +1215,9 @@
               "reasonOutOfScope": "",
               "hasOpenThreats": true,
               "isBidirectional": false,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": true,
-              "protocol": "HTTPS",
+              "protocol": "HTTP(S) – enkripsi belum ditentukan (A5)",
               "threats": [
                 {
                   "id": "29ee806b-b230-55b8-b65a-ff99f08300f5",
@@ -1225,8 +1225,8 @@
                   "status": "Open",
                   "severity": "High",
                   "type": "Information disclosure",
-                  "description": "Jika otorisasi endpoint rekap dan daftar hadir tidak diperiksa pada setiap request (misalnya hanya berdasarkan ID kelas di URL), maka mahasiswa dapat mengakses rekap admin atau dosen dapat melihat daftar hadir kelas yang tidak diampunya. Hal ini dapat menyebabkan tersebarnya data akademik dan data pribadi mahasiswa (nama, NIM, dan pola kehadiran) kepada pihak yang tidak berhak.",
-                  "mitigation": "Menerapkan otorisasi berbasis peran dan kepemilikan kelas di backend pada setiap request rekap dan daftar hadir, membatasi rekap seluruh kelas hanya untuk admin akademik, mengembalikan hanya kolom data yang diperlukan, serta menonaktifkan cache respons pada browser dan proxy.",
+                  "description": "Jika otorisasi endpoint rekap dan daftar hadir tidak diperiksa pada setiap request (misalnya hanya berdasarkan ID kelas di URL), maka mahasiswa dapat mengakses rekap admin atau dosen dapat melihat daftar hadir kelas yang tidak diampunya. Hal ini dapat menyebabkan tersebarnya data akademik dan data pribadi mahasiswa (nama, NIM, dan pola kehadiran) kepada pihak yang tidak berhak. Ancaman yang sama berlaku pada aliran daftar hadir dari Backend Presensi ke Dosen Pengampu dan pada data rekap di Database Akademik.",
+                  "mitigation": "Menerapkan otorisasi berbasis peran dan kepemilikan kelas di backend pada setiap request rekap dan daftar hadir, membatasi rekap seluruh kelas hanya untuk admin akademik, memastikan sesi pengguna masih valid sebelum respons dikirim, hanya menampilkan data yang diperlukan, serta menonaktifkan cache respons pada browser dan proxy.",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 6,
@@ -1294,7 +1294,7 @@
               "isBidirectional": false,
               "isEncrypted": false,
               "isPublicNetwork": false,
-              "protocol": "HTTPS (API internal)",
+              "protocol": "API internal – enkripsi belum ditentukan (A5)",
               "threats": [
                 {
                   "id": "47b36fd4-46dd-517a-9c55-4f9fc06d7c01",
@@ -1369,7 +1369,7 @@
               "isBidirectional": false,
               "isEncrypted": false,
               "isPublicNetwork": false,
-              "protocol": "HTTPS (API internal)",
+              "protocol": "API internal – enkripsi belum ditentukan (A5)",
               "threats": [
                 {
                   "id": "2f637f37-71c0-501c-a6cb-f2564ffb22f2",
@@ -1442,9 +1442,9 @@
               "reasonOutOfScope": "",
               "hasOpenThreats": true,
               "isBidirectional": false,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": true,
-              "protocol": "HTTPS",
+              "protocol": "HTTP(S) – enkripsi belum ditentukan (A5)",
               "threats": [
                 {
                   "id": "c58917b0-06ce-54bb-a9ef-b6b0c92d98b7",
@@ -1669,9 +1669,9 @@
               "reasonOutOfScope": "",
               "hasOpenThreats": true,
               "isBidirectional": false,
-              "isEncrypted": true,
+              "isEncrypted": false,
               "isPublicNetwork": true,
-              "protocol": "HTTPS",
+              "protocol": "HTTP(S) – enkripsi belum ditentukan (A5)",
               "threats": [
                 {
                   "id": "ca2ebbd8-9c96-50d6-a819-78c0cc5499fc",
@@ -1679,7 +1679,7 @@
                   "status": "Open",
                   "severity": "High",
                   "type": "Tampering",
-                  "description": "Jika token QR dapat ditebak (misalnya berupa ID sesi berurutan), dapat diubah di request, atau masih diterima setelah sesi ditutup/kedaluwarsa, maka penyerang dapat mengirim presensi untuk sesi lain atau menggunakan token lama tanpa berada di kelas. Hal ini dapat menyebabkan presensi tercatat pada sesi yang salah atau di luar jendela 5 menit sehingga data kehadiran tidak dapat dipercaya.",
+                  "description": "Jika token QR dapat ditebak (misalnya berupa ID sesi berurutan), dapat diubah di request, atau masih diterima setelah sesi ditutup/kedaluwarsa, maka penyerang dapat mengirim presensi untuk sesi lain atau menggunakan token lama tanpa berada di kelas. Hal ini dapat menyebabkan presensi tercatat pada sesi yang salah atau di luar jendela 5 menit sehingga data kehadiran tidak dapat dipercaya. Ancaman ini juga bersifat Spoofing karena penyerang menyamar sebagai pemegang sesi presensi yang sah.",
                   "mitigation": "Menggunakan token QR acak berentropi tinggi atau ditandatangani (HMAC/JWT) yang memuat ID sesi, ID kelas, dan waktu kedaluwarsa, memvalidasi token sepenuhnya di backend berdasarkan status sesi dan jam server, menolak token dari sesi yang sudah ditutup atau kedaluwarsa, serta membatasi satu mahasiswa hanya dapat memakai token sesi satu kali.",
                   "modelType": "STRIDE",
                   "new": false,
